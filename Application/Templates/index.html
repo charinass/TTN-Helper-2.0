@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!-- Custom styles for this template -->
+<link href="https://getbootstrap.com/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Andika+New+Basic&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-color: rgba(0, 0, 0, .5);
+        font-family: 'Andika New Basic', sans-serif;
+    }
+</style>
+<title> {{ title }} </title>
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="mx-auto col-4 mt-5 text-center">
+            <form class="form-signin">
+                <img class="my-4" src="{{ url_for('static', filename='nodes.png')}}" alt="" width="72" height="72" />
+                <h1 class="h3 mb-3 font-weight-normal">Use your TTN Username</h1>
+
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
+                    autofocus>
+
+                <input type="text" id="ttn_passphrase" class="form-control" placeholder="TTN Passphrase" required>
+
+                <button class="btn btn-lg btn-secondary btn-block my-3" type="submit">Sign in</button>
+
+                <p class="mt-5 mb-3 text-white">&copy; 2020</p>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
