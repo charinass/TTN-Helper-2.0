@@ -1,6 +1,3 @@
-from Application import db
-
-
 class TTN_User(db.Model):
     __tablename__ = "TTN_User"
     user_id = db.Column(db.Integer, primary_key=True)
