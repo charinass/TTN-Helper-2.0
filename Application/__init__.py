@@ -19,4 +19,4 @@ else:
     db.create_all()
 
 
-from .Views import routes
+from .Views import index
