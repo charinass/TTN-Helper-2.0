@@ -1,3 +1,6 @@
+from Application import db
+
+
 class Gateway(db.Model):
     __tablename__ = "Gateway"
     gateway_id = db.Column(db.Integer, primary_key=True)

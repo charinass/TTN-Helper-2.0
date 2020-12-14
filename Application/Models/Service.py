@@ -1,3 +1,6 @@
+from Application import db
+
+
 class Service(db.Model):
     __tablename__ = "Service"
     service_id = db.Column(db.Integer, primary_key=True)

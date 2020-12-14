@@ -1,3 +1,6 @@
+from Application import db
+
+
 class Connection(db.Model):
     __tablename__ = "Connection"
     conn_id = db.Column(db.Integer, primary_key=True)

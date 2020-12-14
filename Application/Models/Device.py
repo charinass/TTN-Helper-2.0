@@ -1,3 +1,6 @@
+from Application import db
+
+
 class Device(db.Model):
     __tablename__ = "Device"
     dev_id = db.Column(db.Integer, primary_key=True)

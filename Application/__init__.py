@@ -10,7 +10,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + "Models/sqlite.db"
 
 db = SQLAlchemy(app)
 
-from .Models import *
+from .Models import Connection, Device, Gateway, Service, TTN_User
 
 if database_exists("sqlite:///" + "Models/sqlite.db"):
     db.init_app(app)
