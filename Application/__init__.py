@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="Templates")
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + "Models/sqlite.db"
@@ -19,4 +19,4 @@ else:
     db.create_all()
 
 
-from .Views import index
+from .Views import index, ttn_helper

@@ -10,33 +10,31 @@
 
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="mx-auto col-md-4 col-xs-12 mt-5 text-center">
-            <form class="form-signin p-3" method="POST">
-                <img class="my-4" src="{{url_for('static', filename='nodes.png')}}" alt="" width="72" height="72" />
-                <h1 class="h3 mb-3 font-weight-normal">Use your TTN Username <br />
-                    and Passphrase
-                </h1>
+<div class="row">
+    <div class="mx-auto col-md-4 col-xs-12 mt-5 text-center">
+        <form class="form-signin p-3" method="POST">
+            <img class="my-4" src="{{url_for('static', filename='nodes.png')}}" alt="" width="72" height="72" />
+            <h1 class="h3 mb-3 font-weight-normal">Use your TTN Username <br />
+                and Passphrase
+            </h1>
 
-                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
-                    autofocus>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
+                autofocus>
 
-                <input type="text" id="ttn_passphrase" name="ttn_passphrase" class="form-control"
-                    placeholder="TTN Passphrase" required>
+            <input type="text" id="ttn_passphrase" name="ttn_passphrase" class="form-control"
+                placeholder="TTN Passphrase" required>
 
-                {% if response != "" %}
-                <p class="pt-2 text-warning text-left">{{ response }}</p>
-                {% endif %}
+            {% if response != "" %}
+            <p class="pt-2 text-warning text-left">{{ response }}</p>
+            {% endif %}
 
-                <button class="btn btn-lg btn-secondary btn-block my-3" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-secondary btn-block my-3" type="submit">Sign in</button>
 
-                <p class="mt-5 mb-3 text-white">&copy; 2020</p>
+            <p class="mt-5 mb-3 text-white">&copy; 2020</p>
 
-            </form>
-        </div>
+        </form>
     </div>
 </div>
 

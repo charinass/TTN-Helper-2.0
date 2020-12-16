@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import time
 
 
 class Authentication:
@@ -38,4 +39,5 @@ class Authentication:
             print("Account not found")
             self.client.disconnect()
         else:
-            self.client.subscribe(self.the_topic)
+            time.sleep(6)
+            self.client.disconnect()

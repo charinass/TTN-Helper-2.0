@@ -15,6 +15,8 @@
 
     <style>
         body {
+            height: 100%;
+            width: 100%;
             font-family: 'Andika New Basic', sans-serif;
         }
     </style>
@@ -24,8 +26,15 @@
 </head>
 
 <body>
-    {% block body %}
+
+    {% block nav %}
     {% endblock %}
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
 </body>
 
 </html>
