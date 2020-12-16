@@ -10,9 +10,9 @@ class Connection(db.Model):
     rssi = db.Column(db.Float)
     snr = db.Column(db.Float)
 
-    devices = db.relationship("Device", backref="device", uselist=False)
-    services = db.relationship("Service", backref="service", uselist=False)
-    gateways = db.relationship("Gateway", backref="gateway", uselist=False)
+    devices = db.relationship("Device", foreign_keys=dev_id)
+    services = db.relationship("Service", foreign_keys=service_id)
+    gateways = db.relationship("Gateway", foreign_keys=gateway_id)
 
     def __repr__(self) -> str:
         return f"<Connection {self.conn_id}>"

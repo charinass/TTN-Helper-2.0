@@ -10,7 +10,7 @@ class Device(db.Model):
     altitude = db.Column(db.Float)
     location = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("TTN_User.user_id"))
-    users = db.relationship("TTN_User", backref="user", uselist=False)
+    users = db.relationship("TTN_User", foreign_keys=user_id)
 
     def __repr__(self) -> str:
         return f"<Device {self.dev_id}>"

@@ -14,7 +14,7 @@ class Service(db.Model):
     current_max = db.Column(db.Float)
     current_min = db.Column(db.Float)
     dev_id = db.Column(db.Integer, db.ForeignKey("Device.dev_id"))
-    devices = db.relationship("Device", backref="device", uselist=False)
+    devices = db.relationship("Device", foreign_keys=dev_id)
 
     def __repr__(self) -> str:
         return f"<Service {self.service_id}>"
