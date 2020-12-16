@@ -30,6 +30,10 @@
                 <input type="text" id="ttn_passphrase" name="ttn_passphrase" class="form-control"
                     placeholder="TTN Passphrase" required>
 
+                {% if response != "" %}
+                <p class="pt-2 text-warning text-left">{{ response }}</p>
+                {% endif %}
+
                 <button class="btn btn-lg btn-secondary btn-block my-3" type="submit">Sign in</button>
 
                 <p class="mt-5 mb-3 text-white">&copy; 2020</p>
