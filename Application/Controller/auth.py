@@ -61,7 +61,7 @@ class User:
         print("Connected to ", client._host, "port: ", client._port)
         print("Flags: ", flags, "return code: ", rc)
         if not self.rc_checker == 0:
-            print("Account not found")
+            logging.info("Account not found")
             self.client.disconnect()
         else:
             time.sleep(7)
