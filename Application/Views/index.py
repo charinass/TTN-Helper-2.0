@@ -1,18 +1,20 @@
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, session
 from werkzeug.utils import redirect
 
 from Application import app
 from ..Controller.auth import Authentication, User
-from .ttn_helper import logged_in
+from .dashboard_view import logged_in
 
 
 @app.errorhandler(404)
 def not_found(e):
+    session.clear()
     return render_template("404.html")
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    session.clear()
     if request.method == "POST":
         username = request.form["username"]
         passphrase = request.form["ttn_passphrase"]  # not a password
