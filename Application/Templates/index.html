@@ -12,6 +12,7 @@
 
 {% block content %}
 
+{% if register != True %}
 <div class="row">
     <div class="mx-auto col-md-4 col-xs-12 mt-5 text-center">
         <form class="form-signin p-3" method="POST">
@@ -32,10 +33,47 @@
 
             <button class="btn btn-lg btn-secondary btn-block my-3" type="submit">Sign in</button>
 
+            <a href="{{url_for('register_user')}}" class="mt-5 mb-3 text-white">Register Here</a>
+
             <p class="mt-5 mb-3 text-white">&copy; 2020</p>
 
         </form>
     </div>
 </div>
+{% endif %}
+
+{% if register == True %}
+<div class="row">
+    <div class="mx-auto col-md-6 col-xs-12 border rounded p-5 m-5">
+        <h2>Register</h1>
+            <p class="py-4">Note: For your account to be registered into the app, use the TTN credentials you
+                registered. Do
+                not use your account password but the passphrase key from TTN.</p>
+            <form class="mt-3" method="POST">
+                <div class="form-group">
+                    <label for="username">Your TTN Username</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="passphrase">TTN Passphrase</label>
+                    <input type="text" class="form-control" name="passphrase" id="passphrase" placeholder="Passphrase">
+                </div>
+                <div class="form-group">
+                    <label for="the_broker">Broker</label>
+                    <input type="text" class="form-control" name="the_broker" id="the_broker" placeholder="Broker">
+                </div>
+                <div class="form-group">
+                    <label for="the_topic">Topic</label>
+                    <input type="text" class="form-control" name="the_topic" id="the_topic" placeholder="Passphrase">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success form-control mt-3" name="submit_new_user"
+                        id="submit_new_user" value="Submit">
+                </div>
+            </form>
+            <p class="py-4 text-warning">{{ response }}</p>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}

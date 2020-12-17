@@ -1,25 +1,50 @@
 import paho.mqtt.client as mqtt
+import logging
 import time
+
+from Application import db
+from ..Models.TTN_User import TTN_User
 
 
 class Authentication:
     """
-    To make sure that each user who registers has an actual account in TTN.
-    Call validate_user() with parameters of username and passphrase created in TTN.
+    Those who log in must have an account registered.
+    Call check_if_user_exist() with parameters of username and passphrase created in TTN.
+    """
+
+    def check_if_user_exist(username, passphrase):
+        if (
+            TTN_User.query.filter(username == TTN_User.username).scalar()
+            and TTN_User.query.filter(passphrase == TTN_User.password).scalar()
+        ) is not None:
+            return True
+        else:
+            return False
+
+
+class User:
+    """
+    Add a non-existing user for the app.
+    Call check_if_user_valid() to check if user is registered in TTN.
     """
 
     def __init__(self):
-        self.the_broker = "eu.thethings.network"
-        self.the_topic = "+/devices/+/up"
         self.client = mqtt.Client()
+        self.rc_checker = ""
 
-    def validate_user(self, username, passphrase):
+    def check_if_user_valid(self, username, passphrase, the_broker, the_topic):
         self.username = username
         self.passphrase = passphrase
+        self.the_broker = the_broker
+        self.the_topic = the_topic
+
         self.client.username_pw_set(self.username, password=self.passphrase)
-        self.client.on_connect = self.on_connect
-        self.client.connect(self.the_broker, 1883, 60)
-        self.client.loop_forever()
+        try:
+            self.client.on_connect = self.on_connect
+            self.client.connect(self.the_broker, 1883, 60)
+            self.client.loop_forever()
+        except:
+            logging.error("Error in connecting.")
 
     def on_connect(self, client, userdata, flags, rc):
         """
@@ -35,9 +60,26 @@ class Authentication:
         self.rc_checker = rc
         print("Connected to ", client._host, "port: ", client._port)
         print("Flags: ", flags, "return code: ", rc)
-        if self.rc_checker > 0 and self.rc_checker < 6:
+        if not self.rc_checker == 0:
             print("Account not found")
             self.client.disconnect()
         else:
-            time.sleep(6)
+            time.sleep(7)
             self.client.disconnect()
+
+    def add_user(self, username, passphrase, the_broker, the_topic):
+        if TTN_User.query.filter(username == TTN_User.username).scalar() is not None:
+            return False
+        else:
+            query_add_user = TTN_User(
+                username=username,
+                password=passphrase,
+                broker=the_broker,
+                topic=the_topic,
+            )
+            try:
+                db.session.add(query_add_user)
+                db.session.commit()
+                return True
+            except:
+                logging.error("Error adding user.")

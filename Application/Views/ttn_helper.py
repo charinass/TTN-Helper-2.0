@@ -7,6 +7,6 @@ from ..Models.TTN_User import TTN_User
 @app.route("/ttn-helper/<string:username>")
 def logged_in(username):
     if TTN_User.query.filter_by(username=TTN_User.username).scalar() is not None:
-        return render_template("ttn-helper.html")
+        return render_template("ttn-helper.html", title="Dashboard")
     else:
         abort(404)
