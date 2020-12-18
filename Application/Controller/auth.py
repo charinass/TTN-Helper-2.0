@@ -2,6 +2,8 @@ import paho.mqtt.client as mqtt
 import logging
 import time
 
+from sqlalchemy.orm import query
+
 from ..Models.TTN_User import TTN_User
 
 
@@ -12,7 +14,7 @@ class Authentication:
     """
 
     def check_if_user_exist(username, passphrase):
-        query_if_exist = TTN_User.query.filter(username == TTN_User.username).first()
+        query_if_exist = TTN_User.query.filter_by(username=TTN_User.username).first()
         if (
             query_if_exist.username == username
             and query_if_exist.password == passphrase
