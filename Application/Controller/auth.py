@@ -71,15 +71,4 @@ class User:
         if TTN_User.query.filter(username == TTN_User.username).scalar() is not None:
             return False
         else:
-            query_add_user = TTN_User(
-                username=username,
-                password=passphrase,
-                broker=the_broker,
-                topic=the_topic,
-            )
-            try:
-                db.session.add(query_add_user)
-                db.session.commit()
-                return True
-            except:
-                logging.error("Error adding user.")
+            return True

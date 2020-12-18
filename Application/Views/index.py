@@ -1,8 +1,10 @@
+import logging
 from flask import render_template, request, url_for, session
 from werkzeug.utils import redirect
 
-from Application import app
+from Application import app, db
 from ..Controller.auth import Authentication, User
+from ..Models.TTN_User import TTN_User
 from .dashboard_view import logged_in
 
 
@@ -54,7 +56,19 @@ def register_user():
                     response="User already exist.",
                 )
             else:
-                return redirect(url_for("index", register="successful"))
+                query_add_user = TTN_User(
+                    username=username,
+                    password=passphrase,
+                    broker=the_broker,
+                    topic=the_topic,
+                )
+                try:
+                    db.session.add(query_add_user)
+                    db.session.commit()
+                    return redirect(url_for("index", register="successful"))
+                except:
+                    logging.error("Error adding user.")
+
         else:
             return render_template(
                 "index.html",
