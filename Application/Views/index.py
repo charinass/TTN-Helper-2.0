@@ -48,7 +48,7 @@ def register_user():
                 response="User is not registered to TTN.",
             )
         elif getattr(user, "rc_checker") == 0:
-            if user.add_user(username, passphrase, the_broker, the_topic) == False:
+            if Authentication.check_if_user_exist(username, passphrase) == True:
                 return render_template(
                     "index.html",
                     title="Register User",

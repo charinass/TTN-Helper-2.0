@@ -2,7 +2,6 @@ import paho.mqtt.client as mqtt
 import logging
 import time
 
-from Application import db
 from ..Models.TTN_User import TTN_User
 
 
@@ -13,10 +12,11 @@ class Authentication:
     """
 
     def check_if_user_exist(username, passphrase):
+        query_if_exist = TTN_User.query.filter(username == TTN_User.username).first()
         if (
-            TTN_User.query.filter(username == TTN_User.username).scalar()
-            and TTN_User.query.filter(passphrase == TTN_User.password).scalar()
-        ) is not None:
+            query_if_exist.username == username
+            and query_if_exist.password == passphrase
+        ):
             return True
         else:
             return False
@@ -66,9 +66,3 @@ class User:
         else:
             time.sleep(7)
             self.client.disconnect()
-
-    def add_user(self, username, passphrase, the_broker, the_topic):
-        if TTN_User.query.filter(username == TTN_User.username).scalar() is not None:
-            return False
-        else:
-            return True
