@@ -1,27 +1,26 @@
 import logging
-from flask import render_template, request, url_for, session
-from werkzeug.utils import redirect
+from flask import render_template, request, redirect, url_for, make_response
 
 from Application import app, db
 from ..Controller.auth import Authentication, User
 from ..Models.TTN_User import TTN_User
-from .dashboard_view import logged_in
+from .dashboard_view import logged_in, log_out
 
 
 @app.errorhandler(404)
 def not_found(e):
-    session.clear()
     return render_template("404.html")
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    session.clear()
     if request.method == "POST":
         username = request.form["username"]
         passphrase = request.form["ttn_passphrase"]  # not a password
         if Authentication.check_if_user_exist(username, passphrase) == True:
-            return redirect(url_for("logged_in", username=username))
+            resp = make_response(render_template("dashboard.html", username=username))
+            resp.set_cookie("sessionID", username, expires=0)
+            return resp
         else:
             return render_template(
                 "index.html",
