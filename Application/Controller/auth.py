@@ -2,8 +2,6 @@ import paho.mqtt.client as mqtt
 import logging
 import time
 
-from sqlalchemy.orm import query
-
 from ..Models.TTN_User import TTN_User
 
 
