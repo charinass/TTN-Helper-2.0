@@ -19,4 +19,4 @@ else:
     db.create_all()
 
 
-from .Views import index
+from .Views import index, dashboard_view

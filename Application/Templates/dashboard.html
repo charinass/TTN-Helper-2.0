@@ -26,14 +26,14 @@
         <div class="sidebar-sticky">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">
+                    <a class="nav-link active" href="{{ url_for('logged_in') }}">
                         <span data-feather="home"></span>
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <span data-feather="clipboard"></span>
+                        <span data-feather="grid"></span>
                         Tables
                     </a>
                 </li>
@@ -85,13 +85,15 @@
             <h1 class="h2">Dashboard</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <button class="btn btn-sm btn-outline-secondary">Share</button>
-                    <button class="btn btn-sm btn-outline-secondary">Export</button>
+                    <button class="btn btn-sm btn-outline-secondary" style="width: 100px;">
+                        <span class="mb-1" data-feather="play"></span>
+                        Connect
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" style="width: 100px;">
+                        <span class="mb-1" data-feather="file-plus"></span>
+                        Export
+                    </button>
                 </div>
-                <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                    <span data-feather="calendar"></span>
-                    This week
-                </button>
             </div>
         </div>
 

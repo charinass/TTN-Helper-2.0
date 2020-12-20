@@ -4,7 +4,6 @@ from flask import render_template, request, redirect, url_for, make_response
 from Application import app, db
 from ..Controller.auth import Authentication, User
 from ..Models.TTN_User import TTN_User
-from .dashboard_view import logged_in, log_out
 
 
 @app.errorhandler(404)
