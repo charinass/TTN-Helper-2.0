@@ -11,15 +11,20 @@ class Authentication:
     Call check_if_user_exist() with parameters of username and passphrase created in TTN.
     """
 
-    def check_if_user_exist(username, passphrase):
-        query_if_exist = TTN_User.query.filter_by(username=TTN_User.username).first()
-        if (
-            query_if_exist.username == username
-            and query_if_exist.password == passphrase
-        ):
-            return True
-        else:
-            return False
+    def __init__(self):
+        self.query_user = None
+
+    def check_if_user_exist(self, username, passphrase):
+        return (
+            None
+            if TTN_User.query.filter(
+                username == TTN_User.username, passphrase == TTN_User.password
+            ).first()
+            is None
+            else TTN_User.query.filter(
+                username == TTN_User.username, passphrase == TTN_User.password
+            ).first()
+        )
 
 
 class User:

@@ -7,7 +7,7 @@
         background-color: rgba(0, 0, 0, .5);
     }
 </style>
-<title> {{ title }} </title>
+<title> {{ results['page_title'] }} </title>
 
 {% endblock %}
 
@@ -19,7 +19,7 @@
 
 {% block content %}
 
-{% if register != True %}
+{% if results['register'] != True %}
 <div class="row">
     <div class="mx-auto col-md-4 col-xs-12 mt-5 text-center">
         <form class="form-signin p-3" method="POST">
@@ -34,8 +34,8 @@
             <input type="text" id="ttn_passphrase" name="ttn_passphrase" class="form-control"
                 placeholder="TTN Passphrase" required>
 
-            {% if response != "" %}
-            <p class="pt-2 text-warning text-left">{{ response }}</p>
+            {% if results['response_msg'] != "" %}
+            <p class="pt-2 text-warning text-left">{{ results['response_msg'] }}</p>
             {% endif %}
 
             <button class="btn btn-lg btn-secondary btn-block my-3" type="submit">Sign in</button>
@@ -49,7 +49,7 @@
 </div>
 {% endif %}
 
-{% if register == True %}
+{% if results['register'] == True %}
 <div class="row">
     <div class="mx-auto col-md-6 col-xs-12 border rounded p-5 m-5">
         <h2>Register</h1>
@@ -78,7 +78,7 @@
                         id="submit_new_user" value="Submit">
                 </div>
             </form>
-            <p class="py-4 text-warning">{{ response }}</p>
+            <p class="py-4 text-warning">{{ results['response_msg'] }}</p>
     </div>
 </div>
 {% endif %}

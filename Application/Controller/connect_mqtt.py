@@ -9,6 +9,7 @@ class Connect:
         self.passphrase = passphrase
         self.the_broker = the_broker
         self.the_topic = the_topic
+        self.json_msg = None
 
     def start_connecting(self):
         self.client.username_pw_set(self.username, password=self.passphrase)
@@ -22,9 +23,12 @@ class Connect:
         print("Flags: ", flags, "return code: ", rc)
         client.subscribe(self.the_topic)
 
-    def on_message(client, userdata, msg):
-        json_msg = json.loads(msg.payload.decode("utf-8"))
-        payload_plain = base64.b64decode(json_msg["payload_raw"])
+    def on_message(self, client, userdata, msg):
+        self.json_msg = json.loads(msg.payload.decode("utf-8"))
+        payload_plain = base64.b64decode(self.json_msg["payload_raw"])
+
+    def get_message(self):
+        return {} if self.json_msg is None else self.json_msg
 
     def stop_connecting(self):
         self.client.disconnect()

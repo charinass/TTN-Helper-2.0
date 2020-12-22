@@ -12,47 +12,49 @@ def not_found(e):
 
 
 @app.route("/", methods=["GET", "POST"])
-def index():
+def index(results=""):
     if request.method == "POST":
         username = request.form["username"]
         passphrase = request.form["ttn_passphrase"]  # not a password
-        if Authentication.check_if_user_exist(username, passphrase) == True:
-            resp = make_response(render_template("dashboard.html", username=username))
+
+        auth = Authentication()
+        check_result = auth.check_if_user_exist(username, passphrase)  # returns a query
+
+        if check_result is not None:
+            resp = make_response(
+                render_template("dashboard.html", check_result=check_result)
+            )
             resp.set_cookie("sessionID", username, expires=0)
             return resp
         else:
-            return render_template(
-                "index.html",
-                title="TTN Helper",
-                response="No such user with that passphrase.",
-            )
-    return render_template("index.html", title="TTN Helper")
+            results = {"response_msg": "No such user with that passphrase."}
+
+    return make_response(render_template("index.html", results=results))
 
 
 @app.route("/register/", methods=["GET", "POST"])
-def register_user():
+def register_user(results={"register": True}):
     if request.method == "POST":
         username = request.form["username"]
         passphrase = request.form["passphrase"]
         the_broker = request.form["the_broker"]
         the_topic = request.form["the_topic"]
+
         user = User()
         user.check_if_user_valid(username, passphrase, the_broker, the_topic)
         if not getattr(user, "rc_checker") == 0:
-            return render_template(
-                "index.html",
-                title="Register User",
-                register=True,
-                response="User is not registered to TTN.",
-            )
+            results = {
+                "register": True,
+                "response_msg": "User is not registered to TTN",
+            }
+
         elif getattr(user, "rc_checker") == 0:
-            if Authentication.check_if_user_exist(username, passphrase) == True:
-                return render_template(
-                    "index.html",
-                    title="Register User",
-                    register=True,
-                    response="User already exist.",
-                )
+            auth = Authentication()
+            if auth.check_if_user_exist(username, passphrase) is not None:
+                results = {
+                    "register": True,
+                    "response_msg": "User already exist in this WebApp.",
+                }
             else:
                 query_add_user = TTN_User(
                     username=username,
@@ -68,11 +70,11 @@ def register_user():
                     logging.error("Error adding user.")
 
         else:
-            return render_template(
-                "index.html",
-                title="Register User",
-                register=True,
-                response="There was an error with your request.",
-            )
+            results = {
+                "register": True,
+                "response_msg": "There was an error with your request.",
+            }
 
-    return render_template("index.html", title="Register User", register=True)
+    return make_response(
+        render_template("index.html", page_title="Register to WebApp", results=results)
+    )

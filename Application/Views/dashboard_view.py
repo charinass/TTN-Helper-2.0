@@ -1,14 +1,19 @@
 from flask import render_template, redirect, url_for, session, make_response
 
+
 from Application import app
-from ..Controller import connect_mqtt
+from ..Controller.connect_mqtt import Connect
 
 
-@app.route("/<username>/")
-def logged_in(username):
-    resp = make_response(render_template("dashboard.html", username=username))
-    resp.set_cookie("sessionID", username, expires=0)
-    return resp
+@app.route("/dashboard/")
+def logged_in(check_result):
+
+    return make_response(render_template())
+
+
+def connect_to_device():
+
+    return "connected"
 
 
 @app.route("/logout/")
