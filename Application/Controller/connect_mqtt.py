@@ -1,4 +1,4 @@
-import base64, json, requests, struct
+import json
 from paho.mqtt import client as mqtt
 
 
@@ -25,7 +25,6 @@ class Connect:
 
     def on_message(self, client, userdata, msg):
         self.json_msg = json.loads(msg.payload.decode("utf-8"))
-        payload_plain = base64.b64decode(self.json_msg["payload_raw"])
 
     def get_message(self):
         return {} if self.json_msg is None else self.json_msg

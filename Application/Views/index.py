@@ -22,14 +22,22 @@ def index(results=""):
 
         if check_result is not None:
             resp = make_response(
-                render_template("dashboard.html", check_result=check_result)
+                redirect(
+                    url_for(
+                        "logged_in",
+                        user=check_result.username,
+                        passphrase=check_result.password,
+                        broker=check_result.broker,
+                        topic=check_result.topic,
+                    )
+                )
             )
-            resp.set_cookie("sessionID", username, expires=0)
+            resp.set_cookie("sessionID", "", expires=0)
             return resp
         else:
             results = {"response_msg": "No such user with that passphrase."}
 
-    return make_response(render_template("index.html", results=results))
+    return render_template("index.html", results=results)
 
 
 @app.route("/register/", methods=["GET", "POST"])
@@ -75,6 +83,6 @@ def register_user(results={"register": True}):
                 "response_msg": "There was an error with your request.",
             }
 
-    return make_response(
-        render_template("index.html", page_title="Register to WebApp", results=results)
+    return render_template(
+        "index.html", page_title="Register to WebApp", results=results
     )
